@@ -1,0 +1,33 @@
+# Git / env
+.git
+.gitignore
+.env
+.env.*
+
+# Python
+venv/
+ENV/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.coverage
+htmlcov/
+
+# Tests — not needed in runtime image
+tests/
+
+# IDE / OS
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# Local docs (optional)
+*.md
+
+logs/
+
+# If you mount FAISS on Railway and never bake it into the image, uncomment:
+# faiss_index/
