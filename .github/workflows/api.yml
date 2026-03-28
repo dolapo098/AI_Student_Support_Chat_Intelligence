@@ -1,4 +1,5 @@
-# CI for KENT_AI_Service — Docker image build (deploy focus; pytest can return later).
+# CI — Docker build (Dockerfile runs build_knowledge_base.py before COPY app, so the image includes RAG).
+# Same image Railway builds from your repo, so production gets index.faiss + chunks.pkl without git-ignoring fixes.
 name: API
 
 on:
@@ -8,8 +9,9 @@ on:
 
 jobs:
   docker:
-    name: Docker build
+    name: Docker build (includes knowledge base)
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v6
 

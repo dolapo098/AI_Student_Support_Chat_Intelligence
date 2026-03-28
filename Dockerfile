@@ -1,5 +1,7 @@
 # Kay — Kent Student Support API (FastAPI + FAISS RAG).
-# Railway sets PORT at runtime; default 8001 for local: docker run -p 8001:8001 ...
+# Knowledge base is built during image build (scrapes Kent URLs + embeddings) so GitHub CI and Railway
+# both ship a working RAG index without committing index.faiss / chunks.pkl.
+# Railway sets PORT at runtime; local: docker run -p 8001:8001 ...
 
 FROM python:3.12-slim-bookworm
 
@@ -22,10 +24,12 @@ RUN pip install --upgrade pip && \
     pip install torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install -r requirements.txt
 
-COPY app ./app
+COPY scripts ./scripts
+RUN python scripts/build_knowledge_base.py && \
+    test -f faiss_index/index.faiss && \
+    test -f faiss_index/chunks.pkl
 
-# Repo tracks faiss_index/.gitkeep so COPY always succeeds; add index.faiss + chunks.pkl before production deploy.
-COPY faiss_index ./faiss_index
+COPY app ./app
 
 EXPOSE 8001
 
