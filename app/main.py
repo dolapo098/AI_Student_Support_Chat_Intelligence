@@ -78,6 +78,8 @@ _allowed_origins = [
     if o.strip()
 ]
 
+# Last middleware added runs first on each request — CORSMiddleware outermost for CORS/OPTIONS.
+app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=_allowed_origins,
@@ -85,7 +87,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-app.add_middleware(SecurityHeadersMiddleware)
 
 app.add_exception_handler(ApiException, api_exception_handler)
 app.add_exception_handler(Exception, unhandled_exception_handler)
