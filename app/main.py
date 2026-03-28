@@ -30,6 +30,28 @@ logger = logging.getLogger(__name__)
 
 _INDEX_DIR = Path(os.getenv("FAISS_INDEX_PATH", "faiss_index"))
 
+# Production Vercel host must match browser Origin exactly (scheme + host, no trailing slash).
+_VERCEL_PRODUCTION_ORIGIN = "https://adedolapo-kent-student-support-chat-ray9jboto.vercel.app"
+
+
+def _allowed_cors_origins() -> list[str]:
+    """Merge built-in dev + Vercel origins with ALLOWED_ORIGINS from env (deduplicated, order preserved)."""
+    defaults = [
+        "http://localhost:3000",
+        "http://localhost:5173",
+        "http://localhost:5174",
+        "http://127.0.0.1:3000",
+        "http://127.0.0.1:5173",
+        "http://127.0.0.1:5174",
+        _VERCEL_PRODUCTION_ORIGIN,
+    ]
+    extra = [
+        x.strip()
+        for x in os.getenv("ALLOWED_ORIGINS", "").split(",")
+        if x.strip()
+    ]
+    return list(dict.fromkeys([*defaults, *extra]))
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -68,21 +90,11 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-_default_origins = (
-    "http://localhost:3000,http://localhost:5173,http://localhost:5174,"
-    "http://127.0.0.1:3000,http://127.0.0.1:5173,http://127.0.0.1:5174"
-)
-_allowed_origins = [
-    o.strip()
-    for o in os.getenv("ALLOWED_ORIGINS", _default_origins).split(",")
-    if o.strip()
-]
-
-# Last middleware added runs first on each request — CORSMiddleware outermost for CORS/OPTIONS.
+# Middleware: last registered runs first on each request — CORS outermost for OPTIONS/preflight.
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=_allowed_origins,
+    allow_origins=_allowed_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
