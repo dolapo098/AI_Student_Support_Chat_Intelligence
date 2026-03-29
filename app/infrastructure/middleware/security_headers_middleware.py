@@ -14,7 +14,7 @@ class SecurityHeadersMiddleware(BaseHTTPMiddleware):
     """
     Adds baseline HTTP security headers when ENABLE_SECURITY_HEADERS is set.
 
-    HSTS is only attached when HSTS_MAX_AGE is a positive integer — enable this
+    HSTS is only attached when HSTS_MAX_AGE is a positive integer - enable this
     only when the app is actually served over HTTPS (e.g. behind TLS-terminated
     ingress) so browsers do not cache HSTS for plain HTTP dev URLs.
     """

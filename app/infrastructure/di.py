@@ -86,17 +86,17 @@ def _get_chat_service() -> IChatService:
 
 
 def get_llm_provider() -> ILLMProvider:
-    """FastAPI dependency — returns the singleton LLM provider."""
+    """FastAPI dependency - returns the singleton LLM provider."""
     return _get_llm_provider()
 
 
 def get_knowledge_provider() -> IKnowledgeProvider:
-    """FastAPI dependency — returns the singleton FAISS knowledge provider."""
+    """FastAPI dependency - returns the singleton FAISS knowledge provider."""
     return _get_knowledge_provider()
 
 
 def get_chat_service() -> IChatService:
-    """FastAPI dependency — returns the singleton ChatService."""
+    """FastAPI dependency - returns the singleton ChatService."""
     return _get_chat_service()
 
 

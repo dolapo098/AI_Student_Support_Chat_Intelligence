@@ -2,7 +2,7 @@
 Optional scrubbed conversation audit (JSON Lines).
 
 Enable with ENABLE_CONVERSATION_AUDIT_LOG=true. Intended for RAG debugging, latency tracking,
-and wellbeing-related review — not a replacement for a production DB or SIEM. All text fields
+and wellbeing-related review - not a replacement for a production DB or SIEM. All text fields
 should be passed through PIIScrubber.for_logs() before calling append_conversation_audit_line().
 """
 

@@ -76,7 +76,7 @@ class OpenAIProvider(ILLMProvider):
                 if "429" in error_str and attempt < _MAX_RETRIES:
                     wait = _RATE_LIMIT_RETRY_SECONDS * (attempt + 1)
                     logger.warning(
-                        "OpenAI rate limit hit (attempt %d/%d) — retrying in %ds",
+                        "OpenAI rate limit hit (attempt %d/%d) - retrying in %ds",
                         attempt + 1, _MAX_RETRIES, wait,
                     )
                     await asyncio.sleep(wait)

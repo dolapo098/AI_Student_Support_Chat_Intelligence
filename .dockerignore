@@ -14,7 +14,7 @@ __pycache__/
 .coverage
 htmlcov/
 
-# Tests — not needed in runtime image
+# Tests - not needed in runtime image
 tests/
 
 # IDE / OS

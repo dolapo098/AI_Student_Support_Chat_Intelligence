@@ -22,7 +22,7 @@ load_dotenv()
 
 logging.basicConfig(
     level=logging.INFO,
-    format="%(asctime)s | %(levelname)-8s | %(name)s — %(message)s",
+    format="%(asctime)s | %(levelname)-8s | %(name)s - %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
@@ -71,7 +71,7 @@ async def lifespan(app: FastAPI):
 
     logger.info("Pre-warming AI services...")
     get_chat_service()
-    logger.info("All services ready — Kay is online.")
+    logger.info("All services ready - Kay is online.")
 
     yield
 
@@ -79,7 +79,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="Kay — University of Kent Student Support AI",
+    title="Kay - University of Kent Student Support AI",
     description=(
         "AI-powered student support chatbot for the University of Kent. "
         "Answers queries on admissions, assessments, deadlines, wellbeing, and general enquiries."
@@ -90,7 +90,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Middleware: last registered runs first on each request — CORS outermost for OPTIONS/preflight.
+# Middleware: last registered runs first on each request - CORS outermost for OPTIONS/preflight.
 app.add_middleware(SecurityHeadersMiddleware)
 app.add_middleware(
     CORSMiddleware,
@@ -109,7 +109,7 @@ app.include_router(chat_router, prefix="/api/v1")
 @app.get("/", tags=["Root"])
 def root():
     return {
-        "service": "Kay — Kent Student Support AI",
+        "service": "Kay - Kent Student Support AI",
         "version": "1.0.0",
         "status": "running",
         "docs": "/docs",

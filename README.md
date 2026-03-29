@@ -48,7 +48,7 @@ Key capabilities include:
    pip install -r requirements.txt
    ```
 
-   **Optional — name / entity redaction:** the scrubber runs **SpaCy NER on the original message**, then **regex** (so NER does not see ``[REDACTED_*]`` tokens, which can be misparsed as ORG). Download a small English model once:
+   **Optional - name / entity redaction:** the scrubber runs **SpaCy NER on the original message**, then **regex** (so NER does not see ``[REDACTED_*]`` tokens, which can be misparsed as ORG). Download a small English model once:
 
    ```bash
    python -m spacy download en_core_web_sm
@@ -82,16 +82,16 @@ Key capabilities include:
    ENVIRONMENT=development
    ```
 
-   Optional: `FAISS_INDEX_PATH` (default `faiss_index`), `ALLOWED_ORIGINS` (comma-separated, no spaces — must match the **exact** browser origin, e.g. both `http://localhost:5173` **and** `http://127.0.0.1:5173` if you use either). The server defaults include both for Vite.
+   Optional: `FAISS_INDEX_PATH` (default `faiss_index`), `ALLOWED_ORIGINS` (comma-separated, no spaces - must match the **exact** browser origin, e.g. both `http://localhost:5173` **and** `http://127.0.0.1:5173` if you use either). The server defaults include both for Vite.
 
    **Privacy / transport (production):**
-   - `SANITIZE_LOGS` — default `true`; strips common PII patterns from log lines and **conversation audit** fields.
-   - **Conversation audit (optional):** set `ENABLE_CONVERSATION_AUDIT_LOG=true` to append **scrubbed** JSON Lines to `CONVERSATION_AUDIT_LOG_PATH` (default `logs/conversation_audit.jsonl`). Each line includes `session_id`, scrubbed user/assistant text (assistant capped by `CONVERSATION_AUDIT_MAX_RESPONSE_CHARS`, default 8000), `retrieved_chunk_indices`, `context_empty`, `wellbeing_flag`, and stage latencies (`latency_ms_retrieval`, `latency_ms_llm`, etc.) for RAG debugging and review. The `logs/` folder is gitignored. **Production** would typically sink the same schema to Postgres/object storage with IAM and retention policies — not raw prints.
-   - `ENABLE_SECURITY_HEADERS` — set `true` behind HTTPS to add `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and optional HSTS.
-   - `HSTS_MAX_AGE` — e.g. `31536000` (only when the app is served over HTTPS end-to-end to the browser; unsafe on plain HTTP dev URLs).
-   - **`ENABLE_SPACY_NER`** — default off; when `true`, runs **SpaCy NER** on the raw text, then regex, for configured entity types (see below).
-   - **`NER_REDACT_LABELS`** — comma-separated spaCy labels to replace (default `PERSON`). Example: `PERSON` or `PERSON,GPE,ORG`.
-   - **`SPACY_MODEL`** — default `en_core_web_sm` (larger models improve NER quality at the cost of RAM/CPU).
+   - `SANITIZE_LOGS` - default `true`; strips common PII patterns from log lines and **conversation audit** fields.
+   - **Conversation audit (optional):** set `ENABLE_CONVERSATION_AUDIT_LOG=true` to append **scrubbed** JSON Lines to `CONVERSATION_AUDIT_LOG_PATH` (default `logs/conversation_audit.jsonl`). Each line includes `session_id`, scrubbed user/assistant text (assistant capped by `CONVERSATION_AUDIT_MAX_RESPONSE_CHARS`, default 8000), `retrieved_chunk_indices`, `context_empty`, `wellbeing_flag`, and stage latencies (`latency_ms_retrieval`, `latency_ms_llm`, etc.) for RAG debugging and review. The `logs/` folder is gitignored. **Production** would typically sink the same schema to Postgres/object storage with IAM and retention policies - not raw prints.
+   - `ENABLE_SECURITY_HEADERS` - set `true` behind HTTPS to add `X-Content-Type-Options`, `X-Frame-Options`, `Referrer-Policy`, and optional HSTS.
+   - `HSTS_MAX_AGE` - e.g. `31536000` (only when the app is served over HTTPS end-to-end to the browser; unsafe on plain HTTP dev URLs).
+   - **`ENABLE_SPACY_NER`** - default off; when `true`, runs **SpaCy NER** on the raw text, then regex, for configured entity types (see below).
+   - **`NER_REDACT_LABELS`** - comma-separated spaCy labels to replace (default `PERSON`). Example: `PERSON` or `PERSON,GPE,ORG`.
+   - **`SPACY_MODEL`** - default `en_core_web_sm` (larger models improve NER quality at the cost of RAM/CPU).
 
    **Hybrid scrubbing:** **SpaCy** (optional) runs on the **original** text for contextual entities (e.g. **person names**). **Regex** then redacts deterministic PII (emails, UK-style phones and postcodes, long numeric IDs, labelled student references). NER runs before regex so bracketed placeholders never confuse the entity model. **Wellbeing** checks and **FAISS** search still use the **original** message.
 
@@ -128,7 +128,7 @@ Ensure the browser and the API both use `https://` URLs in production; point `AL
 
 ### Encryption at rest (operational)
 
-Conversation history is held **in memory** only in this service. The **FAISS index** and `chunks.pkl` live on disk under `FAISS_INDEX_PATH`. Protect those paths with **OS or cloud volume encryption**, restricted file ACLs, and **secrets** (API keys) via the host environment or a secrets manager—not committed to git.
+Conversation history is held **in memory** only in this service. The **FAISS index** and `chunks.pkl` live on disk under `FAISS_INDEX_PATH`. Protect those paths with **OS or cloud volume encryption**, restricted file ACLs, and **secrets** (API keys) via the host environment or a secrets manager-not committed to git.
 
 ---
 
@@ -136,11 +136,11 @@ Conversation history is held **in memory** only in this service. The **FAISS ind
 
 | Endpoint | Method | Description |
 | --- | --- | --- |
-| `/api/v1/chat/health` | GET | Health check — service and FAISS load status |
+| `/api/v1/chat/health` | GET | Health check - service and FAISS load status |
 | `/api/v1/chat` | POST | Send a student message, receive Kay's response |
 | `/api/v1/chat/session/{session_id}` | DELETE | Clear conversation memory for a session |
 
-### POST /api/v1/chat — Example
+### POST /api/v1/chat - Example
 
 ```json
 {
@@ -185,7 +185,7 @@ The service follows **Clean Architecture** principles with strict layer separati
 The FAISS index is **not** built at API startup. Run `python scripts/build_knowledge_base.py`
 to scrape configured pages, embed with the local sentence-transformers model, and write
 `faiss_index/` (or `FAISS_INDEX_PATH`). The API loads that index on startup; if files are
-missing, startup logs a warning — run the build script first.
+missing, startup logs a warning - run the build script first.
 
 ---
 

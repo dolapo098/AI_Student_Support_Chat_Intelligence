@@ -29,13 +29,13 @@ class ChatController:
 
     async def handle_chat(self, request: ChatRequest) -> ChatResponse:
 
-        logger.debug("Chat request received — session: %s", request.session_id)
+        logger.debug("Chat request received - session: %s", request.session_id)
 
         return await self._chat_service.chat(request)
 
     def handle_clear_session(self, session_id: str) -> ClearSessionResponse:
 
-        logger.debug("Clear session request — session: %s", session_id)
+        logger.debug("Clear session request - session: %s", session_id)
 
         return self._chat_service.clear_session(session_id)
 

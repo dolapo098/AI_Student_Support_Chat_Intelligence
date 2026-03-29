@@ -1,5 +1,5 @@
 """
-KnowledgeBaseBuilder — builds the FAISS vector index from Kent University content.
+KnowledgeBaseBuilder - builds the FAISS vector index from Kent University content.
 
 This script is run once before starting the server (or automatically on startup
 via the FastAPI lifespan event in app/main.py).
@@ -78,7 +78,7 @@ _STATIC_KNOWLEDGE = [
     - Extenuating circumstances (EC) forms submitted before the assessment deadline
     - Mitigating circumstances: contact your School Office
     - Results: available on My Kent Uni portal after boards
-    - Resits: typically in August — check your school's guidelines
+    - Resits: typically in August - check your school's guidelines
     - Grade appeal process: via the Academic Appeals procedure on kent.ac.uk
     """,
     """
@@ -92,7 +92,7 @@ _STATIC_KNOWLEDGE = [
     """,
     """
     University of Kent Library services:
-    - Canterbury campus: Templeman Library — open 24/7 during term time
+    - Canterbury campus: Templeman Library - open 24/7 during term time
     - Medway campus: Drill Hall Library
     - Resources: e-books, journals, databases available via kent.ac.uk/library
     - Book borrowing: use Library Search to find and reserve books
@@ -104,7 +104,7 @@ _STATIC_KNOWLEDGE = [
     - Undergraduate: apply via UCAS (www.ucas.com)
     - Postgraduate: apply directly via kent.ac.uk/courses
     - International students: same process, additional documents required (passport, qualifications)
-    - Entry requirements: vary per course — check individual course pages
+    - Entry requirements: vary per course - check individual course pages
     - Clearing: available for eligible courses in August
     - Widening Access schemes: speak to Student Recruitment team
     - Admissions contact: admissions@kent.ac.uk | 01227 827272
@@ -144,7 +144,7 @@ class KnowledgeBaseBuilder:
     def scrape_pages(self, pages: List[tuple]) -> List[str]:
         """
         Scrapes a list of (label, url) pairs and returns cleaned text blocks.
-        Failed pages are skipped with a warning — never blocks the build.
+        Failed pages are skipped with a warning - never blocks the build.
         """
 
         scraped: List[str] = []
@@ -164,11 +164,11 @@ class KnowledgeBaseBuilder:
                 text = main.get_text(separator=" ", strip=True) if main else ""
 
                 if text:
-                    logger.info("Scraped [%s] — %d chars", label, len(text))
+                    logger.info("Scraped [%s] - %d chars", label, len(text))
                     scraped.append(f"[{label}]\n{text}")
 
             except Exception as exc:
-                logger.warning("Could not scrape [%s] %s — skipping: %s", label, url, exc)
+                logger.warning("Could not scrape [%s] %s - skipping: %s", label, url, exc)
 
         return scraped
 
@@ -193,7 +193,7 @@ class KnowledgeBaseBuilder:
         """
 
         if not self._chunks:
-            raise ValueError("No chunks to index — call chunk_texts() first.")
+            raise ValueError("No chunks to index - call chunk_texts() first.")
 
         logger.info("Generating embeddings for %d chunks...", len(self._chunks))
 
@@ -209,7 +209,7 @@ class KnowledgeBaseBuilder:
         index.add(vectors)
 
         logger.info(
-            "FAISS index built — %d vectors, %d dims.",
+            "FAISS index built - %d vectors, %d dims.",
             index.ntotal, vectors.shape[1]
         )
 
@@ -228,7 +228,7 @@ class KnowledgeBaseBuilder:
             pickle.dump(self._chunks, f)
 
         logger.info(
-            "Knowledge base saved to %s — %d chunks ready.",
+            "Knowledge base saved to %s - %d chunks ready.",
             self._index_dir, len(self._chunks)
         )
 

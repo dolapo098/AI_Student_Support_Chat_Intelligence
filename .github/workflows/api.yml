@@ -1,4 +1,4 @@
-# CI — Docker build (Dockerfile runs build_knowledge_base.py before COPY app, so the image includes RAG).
+# CI - Docker build (Dockerfile runs build_knowledge_base.py before COPY app, so the image includes RAG).
 # Same image Railway builds from your repo, so production gets index.faiss + chunks.pkl without git-ignoring fixes.
 name: API
 

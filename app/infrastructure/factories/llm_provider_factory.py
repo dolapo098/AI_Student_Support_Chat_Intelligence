@@ -18,7 +18,7 @@ class LLMProviderFactory:
       - openai → OpenAI GPT (gpt-4o-mini recommended)
       - gemini → Google Gemini (gemini-2.5-flash recommended)
       - groq   → Groq LPU inference (llama-3.3-70b-versatile)
-    Switch provider via LLM_PROVIDER env var — no code changes needed.
+    Switch provider via LLM_PROVIDER env var - no code changes needed.
     """
 
     @staticmethod
@@ -34,7 +34,7 @@ class LLMProviderFactory:
             )
 
         logger.info(
-            "Creating LLM provider: %s — model: %s", provider_name, model_name
+            "Creating LLM provider: %s - model: %s", provider_name, model_name
         )
 
         if provider_name == "openai":

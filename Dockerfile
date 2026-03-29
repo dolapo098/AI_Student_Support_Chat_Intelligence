@@ -1,4 +1,4 @@
-# Kay — Kent Student Support API (FastAPI + FAISS RAG).
+# Kay - Kent Student Support API (FastAPI + FAISS RAG).
 # Knowledge base is built during image build (scrapes Kent URLs + embeddings) so GitHub CI and Railway
 # both ship a working RAG index without committing index.faiss / chunks.pkl.
 # Railway sets PORT at runtime; local: docker run -p 8001:8001 ...

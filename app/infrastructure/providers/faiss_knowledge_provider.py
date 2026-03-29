@@ -25,7 +25,7 @@ _EMBEDDING_MODEL = "all-MiniLM-L6-v2"
 class FAISSKnowledgeProvider(IKnowledgeProvider):
     """
     Summary: Loads and searches a FAISS vector index built from Kent University documents.
-    Uses a local sentence-transformers model for embeddings — no API key required.
+    Uses a local sentence-transformers model for embeddings - no API key required.
     """
 
     def __init__(self, api_key: str, index_path: str = "faiss_index"):
@@ -45,12 +45,12 @@ class FAISSKnowledgeProvider(IKnowledgeProvider):
 
         if not index_file.exists() or not chunks_file.exists():
             logger.warning(
-                "FAISS index not found at %s — will build on first request.", self._index_path
+                "FAISS index not found at %s - will build on first request.", self._index_path
             )
             return
 
         try:
-            # Load index bytes into memory then deserialize — avoids mmap on the file.
+            # Load index bytes into memory then deserialize - avoids mmap on the file.
             # On Windows + OneDrive/cloud folders, mmap can raise OSError [Errno 22] Invalid argument.
             raw = index_file.read_bytes()
             data = np.frombuffer(raw, dtype=np.uint8).copy()
@@ -103,7 +103,7 @@ class FAISSKnowledgeProvider(IKnowledgeProvider):
     def search(self, query: str, top_k: int = 5) -> List[RetrievedChunk]:
 
         if self._index is None or not self._chunks:
-            logger.warning("Knowledge base is not loaded — returning empty context.")
+            logger.warning("Knowledge base is not loaded - returning empty context.")
             return []
 
         if not query.strip():
@@ -119,7 +119,7 @@ class FAISSKnowledgeProvider(IKnowledgeProvider):
             except OSError as enc_err:
                 if getattr(enc_err, "errno", None) == 22:
                     logger.warning(
-                        "encode() raised errno 22 — retrying with batch_size=1."
+                        "encode() raised errno 22 - retrying with batch_size=1."
                     )
                     query_embedding = self._embedder.encode(
                         query,

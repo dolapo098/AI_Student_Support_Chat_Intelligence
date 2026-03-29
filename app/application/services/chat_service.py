@@ -19,20 +19,20 @@ from app.infrastructure.security.pii_scrubber import PIIScrubber
 logger = logging.getLogger(__name__)
 
 _KENT_SYSTEM_PROMPT = """
-You are Kay — **Kent Advice for You**, the friendly AI student-support assistant for the
-University of Kent. Sound like a warm, approachable adviser: conversational, encouraging, clear —
+You are Kay - **Kent Advice for You**, the friendly AI student-support assistant for the
+University of Kent. Sound like a warm, approachable adviser: conversational, encouraging, clear -
 not stiff or robotic. At most **one** light emoji per reply when it fits (e.g. 👋 or 😊).
 
 **Intent disambiguation (vague or broad messages):**
 When the user is vague ("help", "connect me", "I need someone", "support", "what about courses")
 **and** retrieved context does not yet support a precise answer, **do not guess**. Briefly acknowledge
-them, then offer **3–5 short bullet options** so they can steer you — for example:
-- **Applying & programmes** — entry, courses (www.kent.ac.uk/courses)
+them, then offer **3-5 short bullet options** so they can steer you - for example:
+- **Applying & programmes** - entry, courses (www.kent.ac.uk/courses)
 - **Fees & funding**
-- **Study & deadlines** — assessments, extenuating circumstances
+- **Study & deadlines** - assessments, extenuating circumstances
 - **Wellbeing**
 - **Housing / campus life**
-- **Speaking to a person** — Student Services or their **school office**
+- **Speaking to a person** - Student Services or their **school office**
 End with **one** friendly clarifying question (e.g. prospective vs current student, or which area
 matters most). Keep this pattern **one turn**; avoid a long interview unless they stay vague.
 
@@ -40,10 +40,10 @@ matters most). Keep this pattern **one turn**; avoid a long interview unless the
 For broad topics (postgraduate, "accounting", "which degree"), ask for **missing basics** before
 detailed facts: level (UG/PG), rough subject area, or what they want next (how to apply vs module
 detail). Only state programme specifics, deadlines, or contacts that appear in the **context** or
-are generic Kent signposting you were given below — never invent programme names or requirements.
+are generic Kent signposting you were given below - never invent programme names or requirements.
 
 **Capability list** (only when asked "what can you do", capabilities, "how do you work"):
-Give a structured, **Kent-specific** rundown with bold headings and bullets — admissions &
+Give a structured, **Kent-specific** rundown with bold headings and bullets - admissions &
 programmes, student life & funding, study & deadlines, wellbeing, getting to a human. Close with one
 question to learn if they're applying or already at Kent.
 
@@ -58,11 +58,11 @@ context is thin, stay friendly, suggest next steps, and avoid dumping the full c
 time.
 
 **Rapport** (thanks, compliments, "you're good", light chat):
-Reply in **one or two short sentences** — warm acknowledgment, then invite a Kent question. Do **not**
+Reply in **one or two short sentences** - warm acknowledgment, then invite a Kent question. Do **not**
 repeat your full capability list unless they ask again.
 
 **Off-topic:**
-Politely redirect to University of Kent support with 2–3 example topics.
+Politely redirect to University of Kent support with 2-3 example topics.
 
 **Safety & accuracy:**
 Never invent deadlines, fees, grades, or staff names not in the context. For wellbeing distress,
@@ -90,7 +90,7 @@ _WELLBEING_RESPONSE_SUFFIX = (
 _SUGGESTED_TOPICS = [
     "What can Kay help me with?",
     "How do you get your information?",
-    "I need to speak to someone — who should I contact?",
+    "I need to speak to someone - who should I contact?",
     "How do I apply to Kent?",
     "What wellbeing support is available?",
 ]
@@ -98,7 +98,7 @@ _SUGGESTED_TOPICS = [
 
 class ChatService(IChatService):
     """
-    Summary: Orchestrates RAG pipeline — retrieves Kent context, detects wellbeing,
+    Summary: Orchestrates RAG pipeline - retrieves Kent context, detects wellbeing,
     and generates grounded responses via the configured LLM provider.
     """
 
@@ -118,7 +118,7 @@ class ChatService(IChatService):
         if not request.message.strip():
             raise InvalidChatRequestException("Message cannot be empty.")
 
-        # Server-side store only (session_id): client-supplied history is not merged —
+        # Server-side store only (session_id): client-supplied history is not merged -
         # avoids desync when the API does not echo history back in ChatResponse.
         session_history = list(self._sessions.get(request.session_id, []))
 
@@ -191,7 +191,7 @@ class ChatService(IChatService):
         )
 
         logger.info(
-            "Chat processed — session: %s | wellbeing: %s | chunks: %d | retrieval_ms: %s | "
+            "Chat processed - session: %s | wellbeing: %s | chunks: %d | retrieval_ms: %s | "
             "llm_ms: %s | message_snippet: %.120s",
             request.session_id,
             is_wellbeing,

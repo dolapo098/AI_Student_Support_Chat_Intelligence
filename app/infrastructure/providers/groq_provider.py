@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 class GroqProvider(ILLMProvider):
     """
     Summary: LangChain-based Groq provider for fast, free LLM response generation.
-    Uses llama-3.3-70b-versatile by default — high quality, very fast via Groq's LPU.
+    Uses llama-3.3-70b-versatile by default - high quality, very fast via Groq's LPU.
     """
 
     _WELLBEING_KEYWORDS = [

@@ -31,7 +31,7 @@ venv.bak/
 # Environment variables - NEVER commit this
 .env
 
-# FAISS index files — keep directory for Docker COPY; track .gitkeep only
+# FAISS index files - keep directory for Docker COPY; track .gitkeep only
 faiss_index/*
 !faiss_index/.gitkeep
 
