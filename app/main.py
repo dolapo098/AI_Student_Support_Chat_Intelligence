@@ -31,7 +31,7 @@ logger = logging.getLogger(__name__)
 _INDEX_DIR = Path(os.getenv("FAISS_INDEX_PATH", "faiss_index"))
 
 # Production Vercel host must match browser Origin exactly (scheme + host, no trailing slash).
-_VERCEL_PRODUCTION_ORIGIN = "https://adedolapo-kent-student-support-chat-ray9jboto.vercel.app"
+_VERCEL_PRODUCTION_ORIGIN = "https://adedolapo-student-support-chat.vercel.app"
 
 
 def _allowed_cors_origins() -> list[str]:
